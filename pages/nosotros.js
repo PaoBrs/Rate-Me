@@ -8,11 +8,11 @@ const Heading = styles.h1`
   color: palevioletred;
 `
 
-export default function Home() {
+export default function Nosotros () {
   return (
     <div className={styles.container}>
       <Layout>
-      <Heading>Hello World</Heading>
+      <Heading>holiii</Heading>
       </Layout>
     </div>
   )
