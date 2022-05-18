@@ -1,5 +1,6 @@
 import Layout from '../components/layouts/Layout'
 import styles from '@emotion/styled'
+import {css} from '@emotion/react'
 
 const Heading = styles.h1`
   font-size: 1.5em;
@@ -7,11 +8,14 @@ const Heading = styles.h1`
   color: palevioletred;
 `
 
-export default function Home() {
+export default function Login() {
   return (
-    <div className={styles.container}>
+    <div css={css`
+    background-color: var(--black);
+    `}
+    >
       <Layout>
-      <Heading>Index</Heading>
+      <Heading>login</Heading>
       </Layout>
     </div>
   )

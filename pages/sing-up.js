@@ -7,11 +7,11 @@ const Heading = styles.h1`
   color: palevioletred;
 `
 
-export default function Home() {
+export default function SingUp() {
   return (
     <div className={styles.container}>
       <Layout>
-      <Heading>Index</Heading>
+      <Heading>SingUp</Heading>
       </Layout>
     </div>
   )

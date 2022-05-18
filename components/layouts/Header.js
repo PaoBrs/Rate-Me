@@ -1,25 +1,89 @@
 import React from 'react'
-import Search from '../ui/search'
-import Navigation from './Navigation'
 import Link from 'next/link'
+import styled from '@emotion/styled'
+import {css} from '@emotion/react'
+import Search from '../ui/Search'
+import Navigation from './Navigation'
+import Button from '../ui/Button'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
+
+
+const ContHeader = styled.div`
+max-width: 1200px;
+width: 95%;
+margin: 0 auto;
+@media (min-width: 768px){
+  display: flex;
+  justify-content: space-between;
+}
+`
+const Logo = styled.p`
+font-family: 'Roboto Slab', serif;
+font-size: 4rem;
+font-weight: 700;
+line-height: 0;
+color: var(--white);
+margin-right: 2rem;
+`
 
 const Header = props => {
+
+  const user = false;
+
   return (
     <>
-      <header>
-      <div>
-      <div>
-        <p> P</p>
+      <header
+        css={css`
+        border-bottom: 2px solid var(--gris2);
+        padding: 1rem 0;
+        background-color: var(--red);
+      `}
+
+      >
+      <ContHeader>
+      <div
+      css = {css`
+      display: flex;
+      align-items: center;
+      `}
+      >
+        <Link href="/">
+        <Logo><FontAwesomeIcon icon={faStar } />R</Logo>
+        </Link>
         <Search />
         <Navigation />
       </div>
-      <div>
-        <p> Hola : Paola</p>
-        <button type='button'>Logout</button>
-        <Link href="/">Login</Link>
-        <Link href="/">Sign up</Link>
+      <div
+      css = {css`
+      display: flex;
+      align-items: center;
+      `}
+      >
+        {user ? (
+          <>
+          <p
+            css = {css`
+            margin-right: 2rem;
+            color: var(--white);
+            `}
+            > Hola : Paola</p>
+            <Button bgColor="true">Logout</Button>
+          </>
+        ):(
+          <>
+            <Link href="/login">
+            <Button
+              bgColor="true"
+            >Login</Button>
+          </Link>
+          <Link href="/sing-up">
+            <Button>Sing up</Button>
+            </Link>
+          </>
+        ) }
       </div>
-      </div>
+      </ContHeader>
       </header>
     </>
   )

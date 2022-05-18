@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import Layout from '../components/layouts/Layout'
 import styles from '@emotion/styled'
 
@@ -8,11 +7,11 @@ const Heading = styles.h1`
   color: palevioletred;
 `
 
-export default function Nosotros () {
+export default function Popular() {
   return (
     <div className={styles.container}>
       <Layout>
-      <Heading>holiii</Heading>
+      <Heading>Popular</Heading>
       </Layout>
     </div>
   )

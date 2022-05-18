@@ -7,11 +7,11 @@ const Heading = styles.h1`
   color: palevioletred;
 `
 
-export default function Home() {
+export default function Search() {
   return (
     <div className={styles.container}>
       <Layout>
-      <Heading>Index</Heading>
+      <Heading>Search</Heading>
       </Layout>
     </div>
   )
