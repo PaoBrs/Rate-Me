@@ -35,7 +35,7 @@ const Header = props => {
     <>
       <header
         css={css`
-        border-bottom: 2px solid var(--gris2);
+        border-bottom: 2px solid var(----grayDark);
         padding: 1rem 0;
         background-color: var(--red);
       `}
@@ -77,7 +77,7 @@ const Header = props => {
               bgColor="true"
             >Login</Button>
           </Link>
-          <Link href="/sing-up">
+          <Link href="/sign-up">
             <Button>Sing up</Button>
             </Link>
           </>

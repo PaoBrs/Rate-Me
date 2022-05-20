@@ -3,12 +3,17 @@ import Router from 'next/router';
 import Layout from '../components/layouts/Layout'
 import styles from '@emotion/styled'
 import {Form, InputSubmit, Container, Error} from '../components/ui/Form'
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 import firebase from '../firebase';
 
 import useValidation from '../hooks/useValidation';
-import validateLogin from '../validation/validateLogin';
+import validateSignUp from '../validation/validateSignUp';
+
+const INITIAL_STATE={
+  name: '',
+  email: '',
+  password: ''
+}
 
 const Heading = styles.h1`
   font-size: 4rem;
@@ -17,41 +22,47 @@ const Heading = styles.h1`
   margin-top: 13rem;
 `
 
-const INITIAL_STATE={
-  email: '',
-  password: ''
-}
-
-export default function Login() {
+export default function SignUp() {
 
   const [errorUser, setErrorUser] = useState(false);
 
-  const {value, error, handleChange, handleSubmit, handleBlur} = useValidation(INITIAL_STATE, validateLogin, login )
+  const {value, error, handleChange, handleSubmit, handleBlur} = useValidation(INITIAL_STATE, validateSignUp, createAccount )
 
-const {email, password} = value;
+const {name, email, password} = value;
 
-async function login (){
-  const auth = getAuth();
+async function createAccount(){
   try {
-    const usuario = await signInWithEmailAndPassword(auth, email, password)
-    console.log(usuario);
+    await firebase.register(name, email, password)
     Router.push('/');
   } catch (error) {
-    console.error ('Error trying to login', error.message);
-    setErrorUser('Error trying to login');
+    console.error ('Error creating user', error.message);
+    setErrorUser(error.message);
   }
 }
 
   return (
   <div>
     <Layout>
-      <Heading>Login</Heading>
+      <Heading>Sign Up</Heading>
     <Form 
     onSubmit={handleSubmit}
     noValidate
     >
 
-  
+    <Container>
+    <div className="relative z-0 w-full mb-6 group">
+      <input 
+      type="text"
+      id="name"
+      name="name"
+      value={name}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      className="block py-3.5 px-0 m-2 w-full text-3xl text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-orange-400 peer" placeholder=" " required />
+      <label htmlFor="name" className="peer-focus:font-medium absolute text-4xl text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-orange-400 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Name</label>
+  </div>
+    </Container>
+{error.name && <Error>{error.name}</Error>}
 
     <Container>
     <div className="relative z-0 w-full mb-6 group">
@@ -86,7 +97,7 @@ async function login (){
       
       <InputSubmit
         type="submit"
-        value="Login"
+        value="Create Account"
       />
 
 
@@ -95,4 +106,3 @@ async function login (){
   </div>
   )
 }
-
