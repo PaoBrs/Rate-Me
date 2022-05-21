@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Link from 'next/link'
 import styled from '@emotion/styled'
 import {css} from '@emotion/react'
@@ -7,6 +7,7 @@ import Navigation from './Navigation'
 import Button from '../ui/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
+import {FirebaseContext} from '../../firebase'
 
 
 const ContHeader = styled.div`
@@ -29,7 +30,7 @@ margin-right: 2rem;
 
 const Header = props => {
 
-  const user = false;
+  const {user, firebase} = useContext(FirebaseContext)
 
   return (
     <>
@@ -67,8 +68,11 @@ const Header = props => {
             margin-right: 2rem;
             color: var(--white);
             `}
-            > Hola : Paola</p>
-            <Button bgColor="true">Logout</Button>
+            > logged as : {user.email}</p>
+            <Button 
+            bgColor="true"
+            onClick={() => firebase.logout()}
+            >Logout</Button>
           </>
         ):(
           <>

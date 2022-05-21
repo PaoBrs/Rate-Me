@@ -2,13 +2,16 @@ import React, {useState} from 'react';
 import Router from 'next/router';
 import Layout from '../components/layouts/Layout'
 import styles from '@emotion/styled'
-import {Form, InputSubmit, Container, Error} from '../components/ui/Form'
+import Link from 'next/link'
+import {Form, InputSubmit, Container, Error, Message} from '../components/ui/Form'
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {css} from '@emotion/react'
 
 import firebase from '../firebase';
 
 import useValidation from '../hooks/useValidation';
 import validateLogin from '../validation/validateLogin';
+import Button from '../components/ui/Button';
 
 const Heading = styles.h1`
   font-size: 4rem;
@@ -33,8 +36,8 @@ const {email, password} = value;
 async function login (){
   const auth = getAuth();
   try {
-    const usuario = await signInWithEmailAndPassword(auth, email, password)
-    console.log(usuario);
+    const user = await signInWithEmailAndPassword(auth, email, password)
+    console.log(user);
     Router.push('/');
   } catch (error) {
     console.error ('Error trying to login', error.message);
@@ -46,6 +49,7 @@ async function login (){
   <div>
     <Layout>
       <Heading>Login</Heading>
+
     <Form 
     onSubmit={handleSubmit}
     noValidate
@@ -89,6 +93,17 @@ async function login (){
         value="Login"
       />
 
+      <Message>Or create an account <Link href="/sign-up">
+            <button
+            css = {css`
+              color: var(--orange);
+              font-weight: bold;
+              &:hover{
+                color: #FC4F4F;
+              }`}
+            >here</button>
+            </Link>
+      </Message>
 
       </Form>
       </Layout>

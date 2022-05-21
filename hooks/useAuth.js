@@ -13,9 +13,7 @@ function useAuth() {
       }
     });
 
-    return () => {
-      unsubscribe();
-    };
+    return () => unsubscribe();
   }, []);
 
   return userAuth;

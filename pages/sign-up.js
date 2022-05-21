@@ -2,9 +2,11 @@ import React, {useState} from 'react';
 import Router from 'next/router';
 import Layout from '../components/layouts/Layout'
 import styles from '@emotion/styled'
-import {Form, InputSubmit, Container, Error} from '../components/ui/Form'
+import {Form, InputSubmit, Container, Error, Message} from '../components/ui/Form'
+import {css} from '@emotion/react'
+import Link from 'next/link'
 
-import firebase from '../firebase';
+import firebase from '../firebase/firebase';
 
 import useValidation from '../hooks/useValidation';
 import validateSignUp from '../validation/validateSignUp';
@@ -28,15 +30,15 @@ export default function SignUp() {
 
   const {value, error, handleChange, handleSubmit, handleBlur} = useValidation(INITIAL_STATE, validateSignUp, createAccount )
 
-const {name, email, password} = value;
+const {name, email, password, role} = value;
 
 async function createAccount(){
   try {
-    await firebase.register(name, email, password)
+    await firebase.register(name, email, password, role)
     Router.push('/');
   } catch (error) {
     console.error ('Error creating user', error.message);
-    setErrorUser(error.message);
+    setErrorUser(error['message']);
   }
 }
 
@@ -93,6 +95,11 @@ async function createAccount(){
         </div>
     </Container>
 {error.password && <Error>{error.password}</Error>}
+
+<select id = "role" name="role" className="block py-3.5 px-0 m-2 w-full text-3xl text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-orange-400 peer" required>
+<option value="admin">Admin</option>
+<option value="user">User</option>
+</select>
 {errorUser && <Error>{errorUser}</Error>}
       
       <InputSubmit
@@ -100,6 +107,17 @@ async function createAccount(){
         value="Create Account"
       />
 
+<Message>Already have an account? <Link href="/sign-up">
+            <button
+            css = {css`
+              color: var(--orange);
+              font-weight: bold;
+              &:hover{
+                color: #FC4F4F;
+              }`}
+            >login here</button>
+            </Link>
+      </Message>
 
       </Form>
       </Layout>

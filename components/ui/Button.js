@@ -6,6 +6,7 @@ text-transform: uppercase;
 border: 1px;
 padding: 1rem 2rem;
 margin-right: 1rem;
+transition: all .3s;
 background-color: ${props => props.bgColor? '#FF9F45' : 'white'};
 color: ${props => props.bgColor? 'white' : '#000'};
 

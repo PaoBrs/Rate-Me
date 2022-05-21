@@ -55,6 +55,10 @@ const Layout = props => {
     a{
       text-decoration: none;
     }
+
+    textarea{
+      height: 200px;
+    }
   `}
     />
     <Head>

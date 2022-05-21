@@ -5,6 +5,17 @@ export const Form = styled.form`
 max-width: 600px;
 width: 95%;
 margin: 5rem auto 0 auto;
+
+fieldset {
+  margin: 2rem 0;
+  border: none;
+  font-size: 3rem;
+  padding: 2rem;
+  font-family: 'PT Sans', sans-serif;
+  font-weight: 700;
+  color: #fff;
+  
+
 `;
 
 export const Container = styled.div`
@@ -28,12 +39,24 @@ display: flex;
 margin:auto;
 justify-content: center;
 margin-top: 3rem;
+transition: all .3s;
 
 &:hover{
   cursor: pointer;
   background-color: var(--red);
   border: none;
 }
+
+`;
+
+export const Message = styled.p`
+color: var(--white);
+font-size: 1.8rem;
+text-align: left;
+font-family: 'PT Sans', sans-serif;
+font-weight: 700;
+margin-top: 3rem;
+
 
 `;
 

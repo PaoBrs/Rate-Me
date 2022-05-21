@@ -1,5 +1,6 @@
 import App from 'next/app'
-import firebase, {FirebaseContext} from '../firebase'
+import firebase from '../firebase/firebase';
+import {FirebaseContext} from '../firebase';
 import useAuth from '../hooks/useAuth'
 import {css} from '../styles/globals.css'
 
@@ -9,7 +10,7 @@ const MyApp = props =>{
 
   const { Component, pageProps } = props;
   return (
-  <FirebaseContext.Provider value={{firebase}}>
+  <FirebaseContext.Provider value={{user, firebase}}>
     <Component {...pageProps} />
   </FirebaseContext.Provider>
   )
