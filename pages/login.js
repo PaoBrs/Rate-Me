@@ -11,7 +11,7 @@ import firebase from '../firebase';
 
 import useValidation from '../hooks/useValidation';
 import validateLogin from '../validation/validateLogin';
-import Button from '../components/ui/Button';
+
 
 const Heading = styles.h1`
   font-size: 4rem;
@@ -37,6 +37,7 @@ async function login (){
   const auth = getAuth();
   try {
     const user = await signInWithEmailAndPassword(auth, email, password)
+    
     console.log(user);
     Router.push('/');
   } catch (error) {

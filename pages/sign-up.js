@@ -32,6 +32,8 @@ export default function SignUp() {
 
 const {name, email, password, role} = value;
 
+const {db} = firebase
+
 async function createAccount(){
   try {
     await firebase.register(name, email, password, role)

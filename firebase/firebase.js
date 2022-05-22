@@ -21,10 +21,11 @@ class Firebase {
   async register(name, email, password, role){
     try {
       const newUser =  await createUserWithEmailAndPassword(this.auth, email, password).then (user => {
-        return updateProfile(user, {displayName: name})
+        // return updateProfile(user, {displayName: name})
+        return newUser
       })
       // return await newUser.user.updateProfile.displayName({displayName: name,})
-      const docuRef = doc(firestore, `users/ ${newUser.user.uid}`);
+      const docuRef = doc(this.db, `Users/ ${newUser.user.uid}`);
       setDoc (docuRef, { name:name, email:email, role:role })
     } catch (error) {
       console.error (error);
