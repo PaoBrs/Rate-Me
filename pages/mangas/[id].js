@@ -2,6 +2,9 @@ import React, {useEffect, useContext, useState} from 'react'
 import { useRouter } from 'next/router';
 import Error404 from '../../components/layouts/404';
 import Layout from '../../components/layouts/Layout';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+import Spinner from '../../components/layouts/Spinner';
 
 import {FirebaseContext} from '../../firebase';
 import { onSnapshot } from 'firebase/firestore';
@@ -19,7 +22,7 @@ const Manga =() => {
 
   const {firebase} = useContext(FirebaseContext);
 
-  const db = getFirestore();
+  const db = getFirestore(); 
 
   useEffect(() => {
     if (id) {
@@ -38,13 +41,25 @@ const Manga =() => {
     }
   }, [id])
 
+  if (Object.keys(manga).length === 0) return ( <Spinner />)
+
   return (
+    
     <Layout>
       <>
       {error && <Error404 />}
+      <div>
+        <h1 
+          css={css`
+          margin-top: 5rem;
+          color: var(--white);
+          `}
+        >{manga.name}</h1>
+      </div>
       </>
     </Layout>
   )
+
 }
 
 export default Manga; 
