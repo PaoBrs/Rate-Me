@@ -10,7 +10,7 @@ height: 300px;
 `
 const Container = styled.div`
 background-color: #2F3034;
-height: 430px;
+height: 440px;
 
 //  &:hover{
 //   background-color: #2F3034;
@@ -34,17 +34,17 @@ cursor: pointer;
 
 const DetailsManga = ({manga}) => {
 
-  const {id, name, author, description, image, comments, url, createdAt, URLImage, votes} = manga;
+  const {id, name, author, description, image, comments, url, createdAt, URLImage, votes, rateMe} = manga;
 
   return (
     <div>
-      <Container>
+      <Container className='mb-2'>
         <div>
           <Image src={URLImage} alt={name} />
         </div>
         <div className='flex flex-row place-content-between p-5'>
-        <Title>{name}</Title>
-        <p><FontAwesomeIcon icon={faStar } /> {votes}</p>
+        <Title className='w-52'>{name}</Title>
+        <p><FontAwesomeIcon icon={faStar } /> {rateMe}</p>
         </div>
         <div className='p-4'>
         <p>{author}</p>

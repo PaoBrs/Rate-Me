@@ -26,10 +26,10 @@ const Navigation = () => {
 
   return (
 <Nav>
-<Link href="/">Home</Link>
-<Link href="/popular">Popular</Link>
+<Link href="/"><a>Home</a></Link>
+<Link href="/popular"><a>Popular</a></Link>
 
-{user && (<Link href="/new-manga">Add Manga</Link>)}
+{user && (<Link href="/new-manga"><a>Add Manga</a></Link>)}
 
 </Nav>
   )

@@ -19,7 +19,7 @@ margin: 0 auto;
   justify-content: space-between;
 }
 `
-const Logo = styled.p`
+const Logo = styled.a`
 font-family: 'Roboto Slab', serif;
 font-size: 4rem;
 font-weight: 700;

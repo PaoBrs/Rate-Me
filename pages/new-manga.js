@@ -3,6 +3,8 @@ import Router, {useRouter} from 'next/router';
 import Layout from '../components/layouts/Layout'
 import styles from '@emotion/styled'
 import {Form, InputSubmit, Container, Error} from '../components/ui/Form'
+import Error404 from '../components/layouts/404'
+
 
 import { FirebaseContext } from '../firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from '@firebase/storage';
@@ -34,6 +36,8 @@ export default function NewManga() {
 
   const [URLImage, setURLImage] = useState('');
 
+  const [patchimagen, guardarPatchImagen] = useState('');
+
   const {value, error, handleChange, handleSubmit, handleBlur} = useValidation(INITIAL_STATE, validateAddManga, addManga )
 
   const {name, author, url, description} = value;
@@ -48,11 +52,11 @@ const handleImageUpload = e => {
         // Se obtiene referencia de la ubicación donde se guardará la imagen
         const file = e.target.files[0];
         const imageRef = ref(firebase.storage, 'mangas/' + file.name);
- 
+
         // Se inicia la subida
         setUploading(true);
         const uploadTask = uploadBytesResumable(imageRef, file);
- 
+
         // Registra eventos para cuando detecte un cambio en el estado de la subida
         uploadTask.on('state_changed', 
             // Muestra progreso de la subida
@@ -96,6 +100,16 @@ const handleImageUpload = e => {
                 });
             }
         );
+        
+    // uploadBytesResumable(imageRef, archivo, )
+    // .then((snapshot) => {
+    //   guardarPatchImagen(snapshot.metadata.fullPath);
+    //     getDownloadURL(snapshot.ref).then((url) => {
+    //       guardarUrlImagen(url)
+    //   });
+    // }).catch((error) => {
+    //   console.error('Upload failed', error);
+    // });
     };
 
 
@@ -112,9 +126,16 @@ async function addManga(){
     url,
     URLImage,
     description,
-    votes: 0,
+    votes: [],
+    rateMe: 0,
     comments : [],
     createdAt: Date.now(),
+    creator: {
+      uid: user.uid,
+      email: user.email,
+      // role: user.role
+    },
+    voted:[],
   }
 
   const mangas = await addDoc(collection(db, "mangas"), (manga));
@@ -124,104 +145,109 @@ async function addManga(){
   return (
   <div>
     <Layout>
-      <Heading>New Manga</Heading>
+      { !user ? <Error404 /> : (
+        <>
+        <Heading>New Manga</Heading>
 
 
 
-    <Form 
-    onSubmit={handleSubmit}
-    noValidate
-    >
-
-      <fieldset>
-        <legend>General info</legend>
-
+        <Form 
+        onSubmit={handleSubmit}
+        noValidate
+        >
+    
+          <fieldset>
+            <legend>General info</legend>
+    
+        <Container>
+        <div className="relative z-0 w-full mb-6 group">
+          <input 
+          type="text"
+          id="name"
+          name="name"
+          value={name}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className="block py-3.5 px-0 m-2 w-full text-3xl text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-orange-400 peer" placeholder=" " required />
+          <label htmlFor="name" className="peer-focus:font-medium absolute text-4xl text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-orange-400 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Name</label>
+      </div>
+        </Container>
+    {error.name && <Error>{error.name}</Error>}
+    
     <Container>
-    <div className="relative z-0 w-full mb-6 group">
-      <input 
-      type="text"
-      id="name"
-      name="name"
-      value={name}
-      onChange={handleChange}
-      onBlur={handleBlur}
-      className="block py-3.5 px-0 m-2 w-full text-3xl text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-orange-400 peer" placeholder=" " required />
-      <label htmlFor="name" className="peer-focus:font-medium absolute text-4xl text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-orange-400 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Name</label>
-  </div>
-    </Container>
-{error.name && <Error>{error.name}</Error>}
-
-<Container>
-    <div className="relative z-0 w-full mb-6 group">
-      <input 
-      type="text"
-      id="author"
-      name="author"
-      value={author}
-      onChange={handleChange}
-      onBlur={handleBlur}
-      className="block py-3.5 px-0 m-2 w-full text-3xl text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-orange-400 peer" placeholder=" " required />
-      <label htmlFor="author" className="peer-focus:font-medium absolute text-4xl text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-orange-400 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Author</label>
-  </div>
-    </Container>
-{error.author && <Error>{error.author}</Error>}
-
-<Container>
-    <div className="relative z-0 w-full mb-6 group">
-      <input 
-      accept="image/*"
-      type="file"
-      id="image"
-      name="image"
-      onChange={handleImageUpload}
-      className="block py-3.5 px-0 m-2 w-full text-3xl text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-orange-400 peer" placeholder=" " required />
-      <label htmlFor="image" className="peer-focus:font-medium absolute text-4xl text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-orange-400 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Image</label>
-  </div>
-    </Container>
-{error.image && <Error>{error.image}</Error>}
-
-<Container>
-    <div className="relative z-0 w-full mb-6 group">
-      <input 
-      type="url"
-      id="url"
-      name="url"
-      value={url}
-      onChange={handleChange}
-      onBlur={handleBlur}
-      className="block py-3.5 px-0 m-2 w-full text-3xl text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-orange-400 peer" placeholder=" " required />
-      <label htmlFor="url" className="peer-focus:font-medium absolute text-4xl text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-orange-400 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Url</label>
-  </div>
-    </Container>
-{error.url && <Error>{error.url}</Error>}
-
-</fieldset>
-<fieldset>
-<legend>About this Manga</legend>
-<Container>
-    <div className="relative z-0 w-full mb-6 group">
-      <textarea
-      id="description"
-      name="description"
-      value={description}
-      onChange={handleChange}
-      onBlur={handleBlur}
-      className="block py-3.5 px-0 m-2 w-full text-3xl text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-orange-400 peer" placeholder=" " required />
-      <label htmlFor="description" className="peer-focus:font-medium absolute text-4xl text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-orange-400 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Description</label>
-  </div>
-    </Container>
-{error.description && <Error>{error.description}</Error>}
-</fieldset>
-
-{errorUser && <Error>{errorUser}</Error>}
-
-      <InputSubmit
-        type="submit"
-        value="Create Manga"
-      />
-
-
-      </Form>
+        <div className="relative z-0 w-full mb-6 group">
+          <input 
+          type="text"
+          id="author"
+          name="author"
+          value={author}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className="block py-3.5 px-0 m-2 w-full text-3xl text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-orange-400 peer" placeholder=" " required />
+          <label htmlFor="author" className="peer-focus:font-medium absolute text-4xl text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-orange-400 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Author</label>
+      </div>
+        </Container>
+    {error.author && <Error>{error.author}</Error>}
+    
+    <Container>
+        <div className="relative z-0 w-full mb-6 group">
+          <input 
+          accept="image/*"
+          type="file"
+          id="image"
+          name="image"
+          onChange={handleImageUpload}
+          className="block py-3.5 px-0 m-2 w-full text-3xl text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-orange-400 peer" placeholder=" " required />
+          <label htmlFor="image" className="peer-focus:font-medium absolute text-4xl text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-orange-400 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Image</label>
+      </div>
+        </Container>
+    {error.image && <Error>{error.image}</Error>}
+    
+    <Container>
+        <div className="relative z-0 w-full mb-6 group">
+          <input 
+          type="url"
+          id="url"
+          name="url"
+          value={url}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className="block py-3.5 px-0 m-2 w-full text-3xl text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-orange-400 peer" placeholder=" " required />
+          <label htmlFor="url" className="peer-focus:font-medium absolute text-4xl text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-orange-400 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Url</label>
+      </div>
+        </Container>
+    {error.url && <Error>{error.url}</Error>}
+    
+    </fieldset>
+    <fieldset>
+    <legend>About this Manga</legend>
+    <Container>
+        <div className="relative z-0 w-full mb-6 group">
+          <textarea
+          id="description"
+          name="description"
+          value={description}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className="block py-3.5 px-0 m-2 w-full text-3xl text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-orange-400 peer" placeholder=" " required />
+          <label htmlFor="description" className="peer-focus:font-medium absolute text-4xl text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-orange-400 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Description</label>
+      </div>
+        </Container>
+    {error.description && <Error>{error.description}</Error>}
+    </fieldset>
+    
+    {errorUser && <Error>{errorUser}</Error>}
+    
+          <InputSubmit
+            type="submit"
+            value="Create Manga"
+          />
+    
+    
+          </Form>
+          </>
+      ) }
+      
       </Layout>
   </div>
   )

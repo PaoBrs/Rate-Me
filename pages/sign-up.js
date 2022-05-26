@@ -14,7 +14,8 @@ import validateSignUp from '../validation/validateSignUp';
 const INITIAL_STATE={
   name: '',
   email: '',
-  password: ''
+  password: '',
+  role: ''
 }
 
 const Heading = styles.h1`

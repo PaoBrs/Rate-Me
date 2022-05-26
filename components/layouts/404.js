@@ -21,7 +21,7 @@ const Error404 = () => {
         font-weight: 700;
         font-family: 'Roboto', sans-serif;
       `}
-      >Not an existing Manga</p>
+      >Not found</p>
     </div>
   )
 }

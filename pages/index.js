@@ -40,11 +40,11 @@ const db = getFirestore();
   console.log(mangas)
 
   return (
-    <div className={styles.container}>
+    <div>
       <Layout>
       <div className="manga-list">
         <div className="container">
-          <div className="bg-dark flex flex-row gap-4">
+          <div className="bg-dark flex flex-row flex-wrap gap-4">
             { mangas.map(manga => (
               <DetailsManga 
               key={manga.id} manga={manga} 
