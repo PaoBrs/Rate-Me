@@ -51,13 +51,7 @@ const Manga =() => {
   
   const { name, author, description, image, comments, url, createdAt, URLImage, votes, rateMe, voted, creator} = manga;
 
-// const {email, uid}= creator; 
 
-  console.log('holiiiiiiii')
-  console.log(creator)
-  // console.log(email)
-  // console.log(uid)
-  // console.log(creator.uid)
 
   useEffect(() => {
     if (id) {
@@ -94,6 +88,7 @@ const addComment = e => {
 
   comment.userId = user.uid;
   comment.userEmail = user.email;
+  comment.createdAt = Date.now();
 
   const newComment = [...comments, comment];
 
@@ -232,7 +227,7 @@ const handleDelete = async () => {
       <Title className=' mt-8 pl-72 pb-9'><FontAwesomeIcon icon={faComments} />  Comments</Title>
       {(comments.length === 0) ? (<p className='text-white pl-72 pb-11'>No comments yet</p>) : (
 <div>
-      {comments.map((comment, i) => (
+      {comments.sort((a, b) => b.createdAt - a.createdAt).map((comment, i) => (
           <>
           <div key={comment.id} 
           css={css`
