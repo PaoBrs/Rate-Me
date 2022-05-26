@@ -1,11 +1,11 @@
-import React, {useEffect, useState, useContext} from 'react'
-import { FirebaseContext } from '../firebase'
+import React from 'react'
 import Layout from '../components/layouts/Layout'
 import DetailsManga from '../components/layouts/DetailsManga'
 import styles from '@emotion/styled'
-import { getFirestore, onSnapshot, collection, orderBy, query, doc, getDoc, startAt, where } from 'firebase/firestore'
 import { db } from '../firebase/firebase';
-import { useRouter } from 'next/router';
+
+
+import useManga from '../hooks/useManga'
 
 
 const Heading = styles.h1`
@@ -17,30 +17,9 @@ const Heading = styles.h1`
 
 export default function Popular() {
 
-const [mangas, setMangas] = useState([]);
+const {mangas} = useManga();
 
-const {Firebase} = useContext(FirebaseContext);
-
-const router = useRouter();
-const  {id} = router.query;
-
-const db = getFirestore();
-
-  useEffect(() => {
-    
-    const getMangas = () => {
-    onSnapshot(collection(db, 'mangas'), (snapshot) => {
-      setMangas(snapshot.docs.map(doc => {
-        return {
-          id: doc.id,
-          ...doc.data()
-        }
-      }
-      ) )
-    })
-  }
-      getMangas();
-  }, []);
+console.log(mangas);
 
   
   return (
