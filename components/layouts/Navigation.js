@@ -33,7 +33,7 @@ const Navigation = () => {
 <Link href="/"><a>Home</a></Link>
 <Link href="/popular"><a>Popular</a></Link>
 
-{/* {email === 'p.barbosa93@gmail.com' ? (<Link href="/new-manga"><a>Add Manga</a></Link>): null} */}
+{user && <Link href="/new-manga"><a>Add Manga</a></Link>}
 
 </Nav>
   )
