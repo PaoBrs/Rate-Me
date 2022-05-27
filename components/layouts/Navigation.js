@@ -1,13 +1,41 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Link from 'next/link'
+import styled from '@emotion/styled'
+import {FirebaseContext} from '../../firebase'
+
+const Nav= styled.nav`
+padding-left: 2rem;
+
+  a {
+    font-size: 1.8rem;
+    margin-right: 2rem;
+    color: var(--lightOrange);
+    font-family:'PT Sans',sans-serif;
+  &:hover{
+    color: var(--purple);
+  }
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+`
+
 
 const Navigation = () => {
+  const {user} = useContext(FirebaseContext)
+
+  // const {email} = user
+
+  console.log(user)
+
   return (
-<nav>
-<Link href="/">Home</Link>
-<Link href="/">Popular</Link>
-<Link href="/">Add Manga</Link>
-</nav>
+<Nav>
+<Link href="/"><a>Home</a></Link>
+<Link href="/popular"><a>Popular</a></Link>
+
+{/* {email === 'p.barbosa93@gmail.com' ? (<Link href="/new-manga"><a>Add Manga</a></Link>): null} */}
+
+</Nav>
   )
 }
 
