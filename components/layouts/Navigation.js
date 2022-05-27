@@ -11,7 +11,7 @@ padding-left: 2rem;
     margin-right: 2rem;
     color: var(--lightOrange);
     font-family:'PT Sans',sans-serif;
- &:hover{
+  &:hover{
     color: var(--purple);
   }
     &:last-of-type {
@@ -24,12 +24,16 @@ padding-left: 2rem;
 const Navigation = () => {
   const {user} = useContext(FirebaseContext)
 
+  // const {email} = user
+
+  console.log(user)
+
   return (
 <Nav>
 <Link href="/"><a>Home</a></Link>
 <Link href="/popular"><a>Popular</a></Link>
 
-{user && (<Link href="/new-manga"><a>Add Manga</a></Link>)}
+{/* {email === 'p.barbosa93@gmail.com' ? (<Link href="/new-manga"><a>Add Manga</a></Link>): null} */}
 
 </Nav>
   )

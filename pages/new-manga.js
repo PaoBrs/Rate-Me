@@ -130,6 +130,7 @@ async function addManga(){
     rateMe: 0,
     comments : [],
     createdAt: Date.now(),
+    // genre: [],
     creator: {
       uid: user.uid,
       email: user.email,
@@ -217,6 +218,18 @@ async function addManga(){
       </div>
         </Container>
     {error.url && <Error>{error.url}</Error>}
+
+    {/* <Container>
+    <label htmlFor="genre" className="sr-only">Underline select</label>
+    <select id="genre" className="block py-2.5 px-0 w-full text-4xl text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+    <option selected>Choose a genre</option>
+    <option value="comedy">Comedy</option>
+    <option value="romance">Romance</option>
+    <option value="sports">Sports</option>
+    <option value="adventure">Adventure</option>
+</select>
+    </Container> */}
+
     
     </fieldset>
     <fieldset>

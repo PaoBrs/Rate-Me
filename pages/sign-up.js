@@ -10,6 +10,7 @@ import firebase from '../firebase/firebase';
 
 import useValidation from '../hooks/useValidation';
 import validateSignUp from '../validation/validateSignUp';
+import Footer from '../components/layouts/Footer';
 
 const INITIAL_STATE={
   name: '',
@@ -99,10 +100,10 @@ async function createAccount(){
     </Container>
 {error.password && <Error>{error.password}</Error>}
 
-<select id = "role" name="role" className="block py-3.5 px-0 m-2 w-full text-3xl text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-orange-400 peer" required>
+{/* <select id = "role" name="role" className="block py-3.5 px-0 m-2 w-full text-3xl text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-orange-400 peer" required>
 <option value="admin">Admin</option>
 <option value="user">User</option>
-</select>
+</select> */}
 {errorUser && <Error>{errorUser}</Error>}
       
       <InputSubmit
@@ -110,7 +111,7 @@ async function createAccount(){
         value="Create Account"
       />
 
-<Message>Already have an account? <Link href="/sign-up">
+<Message>Already have an account? <Link href="/login">
             <button
             css = {css`
               color: var(--orange);

@@ -11,6 +11,7 @@ import firebase from '../firebase';
 
 import useValidation from '../hooks/useValidation';
 import validateLogin from '../validation/validateLogin';
+import Footer from '../components/layouts/Footer';
 
 
 const Heading = styles.h1`

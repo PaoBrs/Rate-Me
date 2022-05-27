@@ -16,6 +16,7 @@ import { onSnapshot } from 'firebase/firestore';
 import  formatDistanceToNow  from 'date-fns/formatDistanceToNow';
 import { Container, InputSubmit } from '../../components/ui/Form'
 import { app } from 'firebase/app';
+import Footer from '../../components/layouts/Footer';
 
 const MangaContainer = styled.div`
   @media (min-width: 768px) {
@@ -103,7 +104,9 @@ const addComment = e => {
     ...manga,
     comments:newComment
   })
+
 }
+
 
 const allowedToErase =()=>{
   if (!user) {
@@ -141,11 +144,12 @@ const handleDelete = async () => {
       {error ? <Error404 /> : (
       <div>
       <MangaContainer>
-        <div className='flex flex-col justify-center items-center'> 
+        <div className='flex flex-col justify-center items-center w-1/2 h-3/4 m-auto'> 
 
-        <img src={URLImage} alt={manga.name} className='h-400px w-550px' />
+        <img src={URLImage} alt={manga.name} />
         
         <div>
+          
         {allowedToErase() && (
         
         <button 
@@ -282,7 +286,7 @@ const handleDelete = async () => {
 </div>
 
   
-
+<Footer />
     </Layout>
   )
 

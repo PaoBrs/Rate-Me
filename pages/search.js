@@ -4,6 +4,7 @@ import styles from '@emotion/styled'
 import { useRouter} from 'next/router'
 import DetailsManga from '../components/layouts/DetailsManga'
 import useManga from '../hooks/useManga'
+import Footer from '../components/layouts/Footer'
 
 const Heading = styles.h1`
   font-size: 1.5em;
@@ -21,7 +22,11 @@ export default function Search() {
   useEffect(() => {
     const search = q.toLowerCase();
     const filteredMangas = mangas.filter(manga => {
-      return manga.name.toLowerCase().includes(search)
+      return (
+        manga.name.toLowerCase().includes(search) || 
+        manga.author.toLowerCase().includes(search) ||
+        manga.description.toLowerCase().includes(search)
+        )
     })
     setSearch(filteredMangas);
   }, [q, mangas])
@@ -43,7 +48,6 @@ export default function Search() {
           </div>
         </div>
       </div>
-    
       </Layout>
     </div>
   )

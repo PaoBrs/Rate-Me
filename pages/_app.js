@@ -4,6 +4,7 @@ import {FirebaseContext} from '../firebase';
 import useAuth from '../hooks/useAuth'
 import {css} from '../styles/globals.css'
 
+
 const MyApp = props =>{
   const user = useAuth();
   console.log(user);

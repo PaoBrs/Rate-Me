@@ -3,9 +3,11 @@ import Layout from '../components/layouts/Layout'
 import DetailsManga from '../components/layouts/DetailsManga'
 import styles from '@emotion/styled'
 import { db } from '../firebase/firebase';
+import Trending from '../components/layouts/Trending';
 
 
 import useManga from '../hooks/useManga'
+import Footer from '../components/layouts/Footer';
 
 
 const Heading = styles.h1`
@@ -25,6 +27,7 @@ console.log(mangas);
   return (
     <div>
       <Layout>
+        <Trending />
       <div className="manga-list">
         <div className="container">
           <div className="bg-dark flex flex-row flex-wrap gap-4">
@@ -38,8 +41,8 @@ console.log(mangas);
           </div>
         </div>
       </div>
-    
       </Layout>
+      <Footer />
     </div>
   )
 }

@@ -5,6 +5,8 @@ import DetailsManga from '../components/layouts/DetailsManga'
 import styles from '@emotion/styled'
 import { getFirestore, onSnapshot, collection } from 'firebase/firestore'
 import { db } from '../firebase/firebase';
+import RateMe from '../components/layouts/RateMe'
+import Footer from '../components/layouts/Footer'
 
 
 const Heading = styles.h1`
@@ -42,6 +44,7 @@ const db = getFirestore();
   return (
     <div>
       <Layout>
+        <RateMe />
       <div className="manga-list">
         <div className="container">
           <div className="bg-dark flex flex-row flex-wrap gap-4">
@@ -56,6 +59,7 @@ const db = getFirestore();
         </div>
       </div>
     
+      <Footer />
       </Layout>
     </div>
   )

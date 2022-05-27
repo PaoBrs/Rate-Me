@@ -1,4 +1,6 @@
+import { roundToNearestMinutes } from 'date-fns';
 import React, {useState, useEffect} from 'react'
+import Router from 'next/router';
 
 const useValidation = (initialState, validate, fn) => {
   
@@ -36,6 +38,7 @@ const handleSubmit = e => {
   const validationErrors = validate(value);
   setError(validationErrors);
   setIsSubmitting(true);
+  Router.push('/');
 }
 
 const handleBlur = () => {
